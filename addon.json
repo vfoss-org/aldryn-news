@@ -1,5 +1,5 @@
 {
-  "name": "News",
+  "name": "Aldryn News",
   "description": "Publish news in django CMS",
   "url": "https://github.com/aldryn/aldryn-news",
   "package-name": "aldryn-news",
