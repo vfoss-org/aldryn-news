@@ -161,6 +161,10 @@ class News(TranslatableModel):
     published = PublishedManager()
     tags = TaggableManager(blank=True, through=TaggedItem)
 
+    link = models.URLField(_('Link'), blank=True, null=True,
+        help_text=_('This link will be used a absolute url'
+          ))
+
     class Meta:
         verbose_name = _('News')
         verbose_name_plural = _('News')
@@ -172,6 +176,11 @@ class News(TranslatableModel):
     def get_absolute_url(self, language=None):
         language = language or get_current_language()
         slug = get_slug_in_language(self, language)
+
+        #if self.link:
+        #    if not self.content:
+        return self.link
+
         with override(language):
             if not slug:   # news not translated in given language
                 if self.category:

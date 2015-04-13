@@ -15,12 +15,12 @@ class NewsAdmin(FrontendEditableAdmin, TranslatableAdmin, PlaceholderAdmin):
 
     list_display = ['__unicode__', 'publication_start', 'publication_end', 'all_translations']
     form = NewsForm
-    frontend_editable_fields = ('title', 'lead_in')
+    frontend_editable_fields = ('title', 'lead_in', 'link')
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = [
             (None, {'fields': ['title', 'slug', 'category', 'publication_start', 'publication_end']}),
-            (None, {'fields': ['key_visual', 'lead_in', 'tags']})
+            (None, {'fields': ['key_visual', 'lead_in', 'link', 'tags']})
         ]
 
         # show placeholder field if not CMS 3.0
