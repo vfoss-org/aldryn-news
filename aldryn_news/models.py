@@ -9,6 +9,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _, override
 from django.utils.timezone import now
 
+from django.contrib.auth.models import User
+
 from cms.utils.i18n import get_current_language
 from cms.models.fields import PlaceholderField
 from cms.models.pluginmodel import CMSPlugin
@@ -141,6 +143,7 @@ class TaggedItem(TaggitGenericTaggedItemBase, TaggedItemBase):
 class News(TranslatableModel):
     THUMBNAIL_SIZE = getattr(settings, 'ALDRYN_NEWS_ITEM_THUMBNAIL_SIZE', '100x100')
 
+    author = models.ForeignKey(User, blank=True, null=True)
     translations = TranslatedFields(
         title=models.CharField(_('Title'), max_length=255),
         slug=models.CharField(_('Slug'), max_length=255, blank=True,

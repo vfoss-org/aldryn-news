@@ -32,6 +32,10 @@ class NewsAdmin(FrontendEditableAdmin, TranslatableAdmin, PlaceholderAdmin):
 
         return fieldsets
 
+    def save_model(self, request, obj, form, change):
+        obj.author = request.user
+        obj.save()
+
 admin.site.register(News, NewsAdmin)
 
 

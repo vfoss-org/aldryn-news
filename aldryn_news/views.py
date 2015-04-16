@@ -3,12 +3,16 @@ import datetime
 
 from django.views.generic.dates import ArchiveIndexView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
+from django.contrib.auth.models import User
+
 from aldryn_news import request_news_identifier
 from aldryn_news.models import News, Category, Tag
+from aldryn_news.forms import NewsForm
 
 from menus.utils import set_language_changer
 
@@ -114,3 +118,26 @@ class NewsDetailView(BaseNewsView, DetailView):
         response = super(NewsDetailView, self).get(*args, **kwargs)
         set_language_changer(self.request, self.object.get_absolute_url)
         return response
+
+# is this needed as NewsAdmin use NewsForm?
+class NewsCreateView(BaseNewsView, CreateView):
+
+    model = News
+    form_class = NewsForm
+
+    def get_initial(self):
+        # Get the initial dictionary from the superclass method
+        initial = super(NewsCreateView, self).get_initial()
+        # Copy the dictionary so we don't accidentally change a mutable dict
+        initial = initial.copy()
+        initial.update({'author': self.request.user.pk})
+        return initial
+
+    #def form_valid(self, form):
+    #    form.instance.author = self.request.user
+    #    return super(NewsCreateView, self).form_valid(form)
+
+    #def get_form_kwargs(self, **kwargs):
+    #    kwargs = super(NewsCreateView, self).get_form_kwargs(**kwargs)
+    #    kwargs['initial']['author'] = self.request.user
+    #    return kwargs

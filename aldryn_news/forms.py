@@ -115,7 +115,7 @@ class NewsForm(AutoSlugForm):
         widgets = {
             'tags': NewsTagWidget
         }
-
+        model = News
 
 class LinksForm(forms.ModelForm):
 
