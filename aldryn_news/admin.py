@@ -34,6 +34,8 @@ class NewsAdmin(FrontendEditableAdmin, TranslatableAdmin, PlaceholderAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user
+        # limit length of lead_in
+        obj.lead_in = (obj.lead_in[:600] + '..') if len(obj.lead_in) > 600 else obj.lead_in
         obj.save()
 
 admin.site.register(News, NewsAdmin)
