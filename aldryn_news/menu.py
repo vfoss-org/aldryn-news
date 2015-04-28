@@ -29,7 +29,7 @@ class NewsCategoryMenu(CMSAttachMenu):
                 pass
         return nodes
 
-menu_pool.register_menu(NewsCategoryMenu)
+#menu_pool.register_menu(NewsCategoryMenu)
 
 
 def clear_menu_cache(**kwargs):
